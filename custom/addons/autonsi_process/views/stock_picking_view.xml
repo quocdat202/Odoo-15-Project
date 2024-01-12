@@ -1,0 +1,62 @@
+<odoo>
+    <record id="view_picking_type_form_process" model="ir.ui.view">
+        <field name="name">Operation Types</field>
+        <field name="model">stock.picking.type</field>
+        <field name="arch" type="xml">
+            <form string="Operation Types">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="active" invisible="1"/>
+                                <field name="name"/>
+                                <field name="sequence_id" groups="base.group_no_one"/>
+                                <field name="sequence_code"/>
+                                <field name="warehouse_id" groups="stock.group_stock_multi_warehouses" force_save="1"/>
+                                <field name="print_label" attrs="{'invisible': [('code', 'not in', ['internal', 'outgoing'])]}"/>
+                                <field name="reservation_method" attrs="{'invisible': [('code', '=', 'incoming')]}" widget="radio"/>
+                                <label for="reservation_days_before" string="Reserve before scheduled date" attrs="{'invisible': ['|', ('code', '=', 'incoming'), ('reservation_method', '!=', 'by_date')]}"/>
+                                <div class="o_row" attrs="{'invisible': ['|', ('code', '=', 'incoming'), ('reservation_method', '!=', 'by_date')]}">
+                                    <span><field name="reservation_days_before" style="width: 23px;"/> days before/</span>
+                                    <span><field name="reservation_days_before_priority" style="width: 23px;"/> days before when starred</span>
+                                </div>
+                            </group>
+                            <group>
+                                <field name="code" readonly="1"/>
+                                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                                <field attrs='{"invisible": [("code", "not in", ["incoming", "outgoing", "internal"])]}' name="return_picking_type_id"/>
+                                <field name="show_operations"/>
+                                <field name="show_reserved" attrs="{'invisible': [('code', '!=', 'incoming')]}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group attrs='{"invisible": [("code", "not in", ["incoming", "outgoing", "internal"])]}' string="Traceability" groups="stock.group_production_lot" name="stock_picking_type_lot">
+                                <field name="use_create_lots"/>
+                                <field name="use_existing_lots"/>
+                            </group>
+                            <group attrs='{"invisible": [("code", "not in", ["incoming", "outgoing", "internal"])]}' string="Packages" groups="stock.group_tracking_lot">
+                                <field name="show_entire_packs"/>
+                            </group>
+                            <!-- As this group will be hidden without multi_loccation, you will not be able to create a
+                             picking type with the code 'Internal', which make sense, but as the field 'code' on picking
+                             types can't be partially hidden, you can still select the code internal in the form view -->
+                            <group string="Locations" groups="stock.group_stock_multi_locations">
+                                <field name="default_location_src_id" options="{'no_create': True}" attrs="{'required': [('code', 'in', ('internal', 'outgoing'))]}" readonly="1"/>
+                                <field name="default_location_dest_id" options="{'no_create': True}" attrs="{'required': [('code', 'in', ('internal', 'incoming'))]}" readonly="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_stock_picking_form_receipt_inherit">
+        <field name="name">view.stock.picking.form.receipt.inherit</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form"/>
+        <field name="arch" type="xml">
+            <field name="sequence_code" position="after">
+                <field name="is_receipt"/>
+            </field>
+        </field>
+    </record>
+</odoo>

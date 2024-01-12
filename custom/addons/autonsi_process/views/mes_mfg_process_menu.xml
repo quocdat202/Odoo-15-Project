@@ -1,0 +1,96 @@
+<odoo>
+
+<!--	Action-->
+    <record id="mes_mfg_process_action" model="ir.actions.act_window">
+		<field name="name">Process Modelling</field>
+		<field name="res_model">mes.mfg.process</field>
+		<field name="view_mode">form</field>
+		<field name="res_id" ref="receive_process"/>
+	</record>
+
+	<record id="material_receiving_action" model="ir.actions.act_window">
+		<field name="name">Material Receiving</field>
+		<field name="res_model">mes.mfg.process</field>
+		<field name="view_mode">form</field>
+		<field name="res_id" ref="receive_process"/>
+	</record>
+
+	<record id="picking_component_action" model="ir.actions.act_window">
+		<field name="name">Picking Component</field>
+		<field name="res_model">mes.mfg.process</field>
+		<field name="view_mode">form</field>
+		<field name="res_id" ref="pick_components_process"/>
+	</record>
+
+	<record id="storing_product_action" model="ir.actions.act_window">
+		<field name="name">Storing Product</field>
+		<field name="res_model">mes.mfg.process</field>
+		<field name="view_mode">form</field>
+		<field name="res_id" ref="storing_product_process"/>
+	</record>
+
+	<record id="outgoing_shipment_action" model="ir.actions.act_window">
+		<field name="name">Outgoing Shipment</field>
+		<field name="res_model">mes.mfg.process</field>
+		<field name="view_mode">form</field>
+		<field name="res_id" ref="outgoing_shipment_process"/>
+	</record>
+
+	<record id="stock_transfer_action" model="ir.actions.act_window">
+		<field name="name">Stocker Transfer</field>
+		<field name="res_model">mes.mfg.process</field>
+		<field name="view_mode">form</field>
+		<field name="res_id" ref="stock_transfer_process"/>
+	</record>
+
+<!--	Menu-->
+	<menuitem id="process_modelling_menu"
+			  name="Process Modelling"
+			  web_icon="autonsi_process,static/description/icon.png"
+			  action="mes_mfg_process_action"/>
+
+	<menuitem id="process_menu"
+			  name="Process"
+			  parent="process_modelling_menu"
+			  sequence="10"/>
+
+	<menuitem id="material_receiving_menu"
+			  name="Material Receiving"
+			  parent="process_menu"
+			  action="material_receiving_action"/>
+
+	<menuitem id="picking_component_menu"
+		name="Picking Component"
+		parent="process_menu"
+		action="picking_component_action"/>
+
+	<menuitem id="storing_product_menu"
+		name="Storing Product"
+		parent="process_menu"
+		action="storing_product_action"/>
+
+	<menuitem id="outgoing_shipment_menu"
+		name="Outgoing Shipment"
+		parent="process_menu"
+		action="outgoing_shipment_action"/>
+
+	<menuitem id="stock_transfer_menu"
+		name="Stocker Transfer"
+		parent="process_menu"
+		action="stock_transfer_action"/>
+
+	<menuitem id="operation_type_menu"
+		action="stock.action_picking_type_list"
+		parent="process_modelling_menu"
+		sequence="20"/>
+
+	<menuitem id="location_menu"
+		action="stock.action_location_form"
+		parent="process_modelling_menu"
+		sequence="30"/>
+
+	<menuitem id="menu"
+        name="Menu"
+		parent="process_modelling_menu" sequence="40"/>
+
+</odoo>

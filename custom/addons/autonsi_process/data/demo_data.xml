@@ -1,0 +1,205 @@
+<odoo>
+    <data>
+<!--        Warehouse data demo-->
+<!--        <function model="stock.warehouse" name="write">-->
+<!--            <value eval="[ref('stock.warehouse0')]"/>-->
+<!--            <value eval="{'reception_steps': 'two_steps', 'delivery_steps': 'pick_pack_ship', 'manufacture_steps': 'pbm_sam'}"/>-->
+<!--        </function>-->
+        <record id="warehouse2" model="stock.warehouse">
+            <field name="partner_id" ref="base.main_partner"/>
+            <field name="name">Autonsi</field>
+            <field name="code">ATS</field>
+        </record>
+
+<!--        Product data demo-->
+        <record id="a" model="product.product">
+            <field name="name">A</field>
+            <field name="detailed_type">product</field>
+            <field name="tracking">lot</field>
+            <field name="route_ids" eval="[(4, ref('purchase_stock.route_warehouse0_buy'))]" />
+        </record>
+        <record id="semiA" model="product.product">
+            <field name="name">Semi A</field>
+            <field name="detailed_type">product</field>
+            <field name="tracking">lot</field>
+            <field name="route_ids" eval="[(4, ref('mrp.route_warehouse0_manufacture'))]" />
+        </record>
+        <record id="b" model="product.product">
+            <field name="name">B</field>
+            <field name="detailed_type">product</field>
+            <field name="tracking">lot</field>
+            <field name="route_ids" eval="[(4, ref('purchase_stock.route_warehouse0_buy'))]" />
+        </record>
+        <record id="semiB" model="product.product">
+            <field name="name">Semi B</field>
+            <field name="detailed_type">product</field>
+            <field name="tracking">lot</field>
+            <field name="route_ids" eval="[(4, ref('mrp.route_warehouse0_manufacture'))]" />
+        </record>
+        <record id="c" model="product.product">
+            <field name="name">C</field>
+            <field name="detailed_type">product</field>
+            <field name="tracking">lot</field>
+            <field name="route_ids" eval="[(4, ref('purchase_stock.route_warehouse0_buy'))]" />
+        </record>
+        <record id="semiC" model="product.product">
+            <field name="name">Semi C</field>
+            <field name="detailed_type">product</field>
+            <field name="tracking">lot</field>
+            <field name="route_ids" eval="[(4, ref('mrp.route_warehouse0_manufacture'))]" />
+        </record>
+        <record id="fg" model="product.product">
+            <field name="name">FG</field>
+            <field name="detailed_type">product</field>
+            <field name="tracking">lot</field>
+            <field name="route_ids" eval="[(4, ref('mrp.route_warehouse0_manufacture'))]" />
+        </record>
+
+<!--        BOM data demo-->
+        <record id="mrp_bom_semiA" model="mrp.bom">
+            <field name="product_tmpl_id" ref="autonsi_process.semiA_product_template"/>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
+            <field name="sequence">1</field>
+        </record>
+        <record id="mrp_bom_line_semiA" model="mrp.bom.line">
+            <field name="product_id" ref="autonsi_process.a"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
+            <field name="sequence">2</field>
+            <field name="bom_id" ref="autonsi_process.mrp_bom_semiA"/>
+        </record>
+
+        <record id="mrp_bom_semiB" model="mrp.bom">
+            <field name="product_tmpl_id" ref="autonsi_process.semiB_product_template"/>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
+            <field name="sequence">1</field>
+        </record>
+        <record id="mrp_bom_line_semiB" model="mrp.bom.line">
+            <field name="product_id" ref="autonsi_process.b"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
+            <field name="sequence">2</field>
+            <field name="bom_id" ref="autonsi_process.mrp_bom_semiB"/>
+        </record>
+
+        <record id="mrp_bom_semiC" model="mrp.bom">
+            <field name="product_tmpl_id" ref="autonsi_process.semiC_product_template"/>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
+            <field name="sequence">1</field>
+        </record>
+        <record id="mrp_bom_line_semiC" model="mrp.bom.line">
+            <field name="product_id" ref="autonsi_process.c"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
+            <field name="sequence">2</field>
+            <field name="bom_id" ref="autonsi_process.mrp_bom_semiC"/>
+        </record>
+        <record id="mrp_bom_fg" model="mrp.bom">
+            <field name="product_tmpl_id" ref="autonsi_process.fg_product_template"/>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
+            <field name="sequence">1</field>
+        </record>
+        <record id="mrp_bom_line_fg" model="mrp.bom.line">
+            <field name="product_id" ref="autonsi_process.semiC"/>
+            <field name="product_qty">1</field>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
+            <field name="sequence">2</field>
+            <field name="bom_id" ref="autonsi_process.mrp_bom_fg"/>
+        </record>
+
+<!--        Location data demo-->
+        <record id="stock_location_material" model="stock.location">
+            <field name="name">Material</field>
+            <field name="location_id" model="stock.location"
+                eval="obj().env.ref('stock.warehouse0').lot_stock_id.id"/>
+        </record>
+        <record id="stock_location_wip" model="stock.location">
+            <field name="name">WIP</field>
+            <field name="location_id" model="stock.location"
+                eval="obj().env.ref('stock.warehouse0').lot_stock_id.id"/>
+        </record>
+        <record id="stock_location_pqc" model="stock.location">
+            <field name="name">PQC</field>
+            <field name="location_id" model="stock.location"
+                eval="obj().env.ref('stock.warehouse0').lot_stock_id.id"/>
+        </record>
+        <record id="stock_location_fg" model="stock.location">
+            <field name="name">FG</field>
+            <field name="location_id" model="stock.location"
+                eval="obj().env.ref('stock.warehouse0').lot_stock_id.id"/>
+        </record>
+
+        <function model="stock.location" name="write">
+            <value model="stock.location" eval="obj().search([
+                ('name', 'like', 'Packing Zone'), ('location_id.name', 'like', 'WH')]).id"/>
+            <value eval="{'name': 'Packing'}"/>
+        </function>
+        <function model="stock.location" name="write">
+            <value model="stock.location" eval="obj().search([
+                ('name', 'like', 'Output'), ('location_id.name', 'like', 'WH')]).id"/>
+            <value eval="{'name': 'Delivery'}"/>
+        </function>
+
+<!--        <record id="stock_location_material" model="stock.location">-->
+<!--            <field name="name">Material</field>-->
+<!--            <field name="location_id" model="stock.location"-->
+<!--                eval="obj().env.ref('stock.warehouse2').lot_stock_id.id"/>-->
+<!--        </record>-->
+<!--        <record id="stock_location_wip" model="stock.location">-->
+<!--            <field name="name">WIP</field>-->
+<!--            <field name="location_id" model="stock.location"-->
+<!--                eval="obj().env.ref('stock.warehouse2').lot_stock_id.id"/>-->
+<!--        </record>-->
+<!--        <record id="stock_location_pqc" model="stock.location">-->
+<!--            <field name="name">PQC</field>-->
+<!--            <field name="location_id" model="stock.location"-->
+<!--                eval="obj().env.ref('stock.warehouse2').lot_stock_id.id"/>-->
+<!--        </record>-->
+<!--        <record id="stock_location_fg" model="stock.location">-->
+<!--            <field name="name">FG</field>-->
+<!--            <field name="location_id" model="stock.location"-->
+<!--                eval="obj().env.ref('stock.warehouse2').lot_stock_id.id"/>-->
+<!--        </record>-->
+
+        <!--        <function model="stock.location" name="write">-->
+<!--            <value model="stock.location" eval="obj().search([-->
+<!--                ('name', 'like', 'Packing Zone'), ('location_id.name', 'like', 'ATS')]).id"/>-->
+<!--            <value eval="{'name': 'Packing'}"/>-->
+<!--        </function>-->
+        <function model="stock.location" name="write">
+            <value model="stock.location" eval="obj().search([
+                ('name', 'like', 'Output'), ('location_id.name', 'like', 'ATS')]).id"/>
+            <value eval="{'name': 'Delivery'}"/>
+        </function>
+
+<!--        Stck pick type data demo-->
+        <record id="picking_type_wip" model="stock.picking.type">
+            <field name="name">WIP</field>
+            <field name="sequence_code">WIP</field>
+            <field name="code">internal</field>
+            <field name="warehouse_id" ref="stock.warehouse0"/>
+        </record>
+        <record id="picking_type_pqc" model="stock.picking.type">
+            <field name="name">PQC Order</field>
+            <field name="sequence_code">PQC</field>
+            <field name="code">internal</field>
+            <field name="warehouse_id" ref="stock.warehouse0"/>
+        </record>
+
+<!--        Work center data demo-->
+        <record id="workcenter_assembly1" model="mrp.workcenter">
+            <field name="name">Assembly Line 1</field>
+        </record>
+        <record id="workcenter_assembly2" model="mrp.workcenter">
+            <field name="name">Assembly Line 2</field>
+        </record>
+        <record id="workcenter_assembly3" model="mrp.workcenter">
+            <field name="name">Assembly Line 3</field>
+        </record>
+        <record id="workcenter_assembly4" model="mrp.workcenter">
+            <field name="name">Assembly Line 4</field>
+        </record>
+
+
+    </data>
+</odoo>

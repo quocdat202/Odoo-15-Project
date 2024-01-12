@@ -1,0 +1,29 @@
+<odoo>
+    <data>
+        <record id="receive_process" model="mes.mfg.process">
+            <field name="title">Receive</field>
+            <field name="process_type">receive</field>
+            <field name="warehouse_id" eval="ref('stock.warehouse0')"/>
+        </record>
+        <record id="pick_components_process" model="mes.mfg.process">
+            <field name="title">Pick Component</field>
+            <field name="process_type">pick_component</field>
+            <field name="warehouse_id" eval="ref('stock.warehouse0')"/>
+        </record>
+        <record id="storing_product_process" model="mes.mfg.process">
+            <field name="title">Storing Product</field>
+            <field name="process_type">storing_product</field>
+            <field name="warehouse_id" eval="ref('stock.warehouse0')"/>
+        </record>
+        <record id="outgoing_shipment_process" model="mes.mfg.process">
+            <field name="title">Outgoing Shipment</field>
+            <field name="process_type">outgoing_shipment</field>
+            <field name="warehouse_id" eval="ref('stock.warehouse0')"/>
+        </record>
+        <record id="stock_transfer_process" model="mes.mfg.process">
+            <field name="title">Stock Transfer</field>
+            <field name="process_type">stock_transfer</field>
+            <field name="warehouse_id" eval="ref('stock.warehouse0')"/>
+        </record>
+    </data>
+</odoo>

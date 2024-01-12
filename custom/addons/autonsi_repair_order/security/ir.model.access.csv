@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+autonsi_repair_order,autonsi.repair.order,autonsi_repair_order.model_autonsi_repair_order,base.group_user,1,1,1,1
+autonsi_repair_detail,autonsi.repair.detail,autonsi_repair_order.model_autonsi_repair_detail,base.group_user,1,1,1,1

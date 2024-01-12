@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+
+   
+
+    <menuitem name="ERP" id="erp_menu"
+                  web_icon="sale_management,static/description/icon.png"
+                  sequence="30"/>
+
+    <menuitem name="MES" id="mes_menu"
+                  web_icon="autonsi_process,static/description/icon.png"
+                  sequence="40"/>
+
+  <menuitem name="WMS" id="main_wms" parent="mes_menu" sequence="15"/>
+
+    <menuitem name="WMS" id="autonsi_wms.wms_menu_parent" parent="main_wms" sequence="1"/>
+  
+
+
+    <menuitem name="KMS" id="kms_menu"
+                  web_icon="autonsi_process,static/description/icon.png"
+                  sequence="80"/>
+
+  <menuitem name="QMS" id="quality_control_main_menu" parent="mes_menu" sequence="20"/>
+    <menuitem name="QMS" id="autonsi_quality.quality_control_main_menu" parent="mes_menu" sequence="20"/>
+
+
+
+
+
+    
+
+    <menuitem name="Process Modelling" id="autonsi_process.process_modelling_menu" parent="mes_menu" sequence="10"/>
+    <menuitem name="WMS" id="main_wms" parent="mes_menu" sequence="15"/>
+    <menuitem name="MMS" id="main_mms" parent="mes_menu" sequence="30"/>
+
+
+
+
+
+
+    <menuitem
+        id="stock.menu_stock_root"
+        name="Inventory"
+        parent="mes_menu"
+        sequence="10" />
+
+    <menuitem
+        id="stock.menu_stock_config_settings"
+        name="Inv Config."
+        parent="mes_menu"
+        sequence="70" />
+
+ 
+
+  </data>
+</odoo>
+

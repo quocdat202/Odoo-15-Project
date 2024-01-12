@@ -1,0 +1,63 @@
+<odoo>
+
+    <record id="mes_mfg_process_view_form" model="ir.ui.view">
+        <field name="name">Mes Process Form</field>
+        <field name="model">mes.mfg.process</field>
+        <field name="arch" type="xml">
+            <form create="false">
+                <header>
+                    <button name="sync_rules" type="object"
+                            string="Sync Rules" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="title"/>
+                            <field name="update_date"/>
+                            <field name="process_type"/>
+                        </group>
+                        <group>
+                            <field name="user"/>
+                            <field name="remark"/>
+                            <field name="route_id"/>
+                            <field name="warehouse_id"/>
+                        </group>
+                    </group>
+                     <notebook >
+                         <page string="Process">
+                             <field name="process_sub_ids">
+                                 <tree editable="bottom" delete="false">
+                                     <field name="rule_id" invisible="1"/>
+                                     <field name="picking_type_id"  context="{'form_view_ref': 'autonsi_process.view_picking_type_form_process'}"/>
+                                     <field name="location_src_id"/>
+                                     <field name="location_id"/>
+                                     <field name="flag" invisible="1"/>
+                                     <field name="include_qc"/>
+                                     <field name="is_qc_process"/>
+                                     <button name="delete_rules" type="object"
+                                             class="oe_highlight fa fa-trash"
+                                             attrs="{'invisible': [('picking_type_id', '=', 1)]}"/>
+                                </tree>
+                             </field>
+                         </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="mes_mfg_process_view_tree" model="ir.ui.view">
+        <field name="name">Mes Process Tree</field>
+        <field name="model">mes.mfg.process</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="title"/>
+                <field name="update_date"/>
+                <field name="process_type"/>
+                <field name="user"/>
+                <field name="remark"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>

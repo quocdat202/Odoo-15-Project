@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="autonsi_repair_order_view_form" model="ir.ui.view">
+        <field name="name">autonsi.repair.order.view.form</field>
+        <field name="model">autonsi.repair.order</field>
+        <field name="arch" type="xml">
+            <form string="Repair Order">
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object" class="oe_highlight" attrs="{'invisible': ['|',('state', '!=', 'draft'),('mo', '==', False)]}"/>
+                    <button name="action_cancel" string="Cancel" type="object" attrs="{'invisible': [('state', '==', 'done')]}"/>
+
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,in_progress,done"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="mo" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                            <field name="source" />
+                        </group>
+                        <group>
+                            <field name="create_date" string="Create Date"/>
+                            <field name="lot_domain" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="order" string="Order">
+                            <field name="detail_ids_order" attrs="{'readonly': [('state', '=', 'done')]}">
+                                <tree editable="bottom">
+                                    <field name="lot_id" options="{'no_create': True}" domain="[('id','in', parent.lot_domain)]"/>
+                                    <field name="product_id" />
+                                    <field name="qty"/>
+                                    <field name="weight"/>
+                                    <field name="reason"/>
+                                    <field name="mrp_pro_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="repair" string="Repair">
+                            <field name="detail_ids_repair" attrs="{'readonly': [('state', '=', 'done')]}">
+                                <tree editable="bottom">
+                                    <field name="lot_id" readonly="1"/>
+                                    <field name="product_id" />
+                                    <field name="qty"/>
+                                    <field name="weight"/>
+                                    <field name="reason"/>
+                                    <field name="staff" required="1"/>
+                                    <field name="status" required="1"/>
+                                    <field name="remark"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <button string="Repair" name="action_in_progress" type="object" class="mr-2 float-right btn-primary" attrs="{'invisible': [('state', '!=', 'confirmed')]}"/>
+                    <button string="Finish" name="action_done" type="object" class="mr-2 float-right btn-primary" attrs="{'invisible': [('state', '!=', 'in_progress')]}"/>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="autonsi_repair_order_view_tree" model="ir.ui.view">
+        <field name="name">autonsi.repair.order.view.tree</field>
+        <field name="model">autonsi.repair.order</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="mo" />
+                <field name="source"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'" decoration-info="state not in ('done', 'cancel', 'draft')" decoration-muted="state == 'draft'"/>
+                <field name="create_date"/>
+
+            </tree>
+        </field>
+    </record>
+</odoo>

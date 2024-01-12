@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="repair_order_action" model="ir.actions.act_window">
+        <field name="name">Repair Order</field>
+        <field name="res_model">autonsi.repair.order</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,form</field>
+
+    </record>
+    <menuitem id="autonsi_repair_order_menu" name="Repair Order" sequence="1" action="repair_order_action"/>
+
+</odoo>
